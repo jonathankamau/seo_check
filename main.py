@@ -6,23 +6,22 @@ site = input("Enter the site you would like to analyze for keywords: ")
 keyword_file = open('keywords.txt', 'r')
 
 def keyword_checker():
-    result_list = []
+    # result_list = []
     try:
-        site_content = request.urlopen(site)
+        site_content = request.urlopen(site).read()
     except HTTPError as e:
         print(e)
 
-    data = BeautifulSoup(site_content, 'html.parser')
+    data = BeautifulSoup(site_content)
     print('data', data)
 
     for each_line in keyword_file:
-        print('each_line', each_line)
-        stripped_line = each_line.strip()
+        print('each_line', each_line.lower())
+        stripped_line = each_line.lower().strip()
 
-        result_list = data.body.findAll(text=stripped_line)
+        result_list = data.find_all('p', string=stripped_line)
         print('result_list', result_list)
 
-    
-    return result_list
 
-print(keyword_checker())
+
+keyword_checker()
