@@ -15,7 +15,7 @@ def keyword_checker():
         print(e)
 
     for keyword in keywords:
-        matches = re.findall(keyword, site_content)
+        matches = re.findall(keyword, site_content, re.IGNORECASE)
 
         if len(matches) == 0:
             result = f' \u274C No match was found for {keyword}'
