@@ -1,9 +1,11 @@
 import re
+import gzip
 from urllib import request
 from urllib.error import HTTPError
 
-site = input("Enter the site you would like to analyze for keywords: ")
-keyword_file = open('keywords.txt', 'r')
+site = input('Enter the site you would like to analyze for keywords: ')
+keywords = input(
+    'Enter the keywords you would like to analyze for, seperated by a space: ').split()
 
 def keyword_checker():
     result_list = []
@@ -12,15 +14,13 @@ def keyword_checker():
     except HTTPError as e:
         print(e)
 
-    for each_line in keyword_file:
-        stripped_line = each_line.lower().strip()
-
-        matches = re.findall(stripped_line, site_content)
+    for keyword in keywords:
+        matches = re.findall(keyword, site_content)
 
         if len(matches) == 0:
-            result = f' \u274C No match was found for {stripped_line}'
+            result = f' \u274C No match was found for {keyword}'
         else:
-            result = f' \u2705 {stripped_line} appears {len(matches)} times'
+            result = f' \u2705 {keyword} appears {len(matches)} times'
 
         print(result)
         
